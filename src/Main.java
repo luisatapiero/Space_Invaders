@@ -125,7 +125,7 @@ public class Main extends PApplet {
 			textSize(25);
 			fill(93, 82, 249);
 			text(puntos, 278, 407);
-			text(tiempoActual, 365, 461);
+			text(tiempoActual/1000, 365, 461);
 			break;
 
 		}
@@ -192,6 +192,7 @@ public class Main extends PApplet {
 		listaBalas.clear();
 		listaEnemigo1.clear();
 		listaEnemigo2.clear();
+		nave.setPosX(300);
 	}
 
 	private void initBala() {
@@ -278,7 +279,11 @@ public class Main extends PApplet {
 	private void pierdeJuego() {
 		int alturaLienzo=900;
 		for (int i = 0; i < listaEnemigo1.size(); i++) {
-			if (alturaLienzo < (listaEnemigo1.get(i).getPosY() + (54 / 2))) {
+			if (alturaLienzo < (listaEnemigo1.get(i).getPosY() + (54 / 2)) || 
+					listaEnemigo1.get(i).getPosX() > (nave.getPosX() - (158 / 2))
+					&& listaEnemigo1.get(i).getPosX() < (nave.getPosX() + (158/ 2))
+					&& listaEnemigo1.get(i).getPosY() > (783 - (150 / 2))
+					&& listaEnemigo1.get(i).getPosY() < (783 + (150 / 2))) {
 				listaEnemigo1.remove(i);
 				pantalla = 5;
 
