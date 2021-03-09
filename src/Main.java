@@ -1,13 +1,14 @@
 
 import processing.core.PApplet;
 import processing.core.PImage;
-
 public class Main extends PApplet{
 	
+	private Nave nave;
 	PImage imgInicio;
 	PImage imgInstrucciones;
 	PImage imgResumen;
 	PImage imgJuego;
+	int tiempo = 0;
 	
 	
 	int pantalla = 1;
@@ -26,6 +27,7 @@ public class Main extends PApplet{
 	}
 	
 	public void setup() {
+		nave = new Nave(this);
 		cargarFondos();
 		
 		
@@ -35,6 +37,7 @@ public class Main extends PApplet{
 		imageMode(CENTER);
 		//System.out.println(mouseX);
 		cambioPantallas();
+		
 
 		
 	}
@@ -63,9 +66,8 @@ public class Main extends PApplet{
 			
 		case 2:
 			background (imgJuego);
-			textSize(25); 
-			fill(245, 245, 245);
-			text("Tiempo: "+millis()/1000,410,60);
+			nave.draw();
+			tiempo();
 			break;
 			
 		case 3:
@@ -114,6 +116,13 @@ public class Main extends PApplet{
 			break;
 		
 			}
+	}
+	
+	public void tiempo() {
+		int tiempo = millis()/1000;
+		textSize(25); 
+		fill(245, 245, 245);
+		text("Tiempo: "+tiempo,410,60);
 	}
 	
 
