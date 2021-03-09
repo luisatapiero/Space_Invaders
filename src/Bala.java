@@ -6,7 +6,7 @@ public class Bala {
 	private Nave nave;
 	PImage disparo;
 	private int bPosY = 783;
-	private int vel = 12;
+	private int vel = 20;
 	private PApplet app;
 	private int posX;
 	private boolean dispara;

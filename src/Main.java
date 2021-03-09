@@ -44,13 +44,12 @@ public class Main extends PApplet {
 		frameRate(60);
 		inicioTiempo = millis();
 		tiempoActual = 0;
-		// bala = new Bala(this);
 	}
 
 	public void draw() {
 
 		imageMode(CENTER);
-		// System.out.println(mouseX);
+		System.out.println(mouseY);
 		cambioPantallas();
 
 	}
@@ -64,12 +63,12 @@ public class Main extends PApplet {
 		if (nave.getPosX() > 0) {
 
 			if (keyCode == LEFT) {
-				nave.setPosX(nave.getPosX() - 15);
+				nave.setPosX(nave.getPosX() - 20);
 			}
 		}
 		if (nave.getPosX() < 600) {
 			if (keyCode == RIGHT) {
-				nave.setPosX(nave.getPosX() + 15);
+				nave.setPosX(nave.getPosX() + 20);
 
 			}
 		}
@@ -122,6 +121,11 @@ public class Main extends PApplet {
 
 		case 5:
 			background(imgResumen);
+
+			textSize(25);
+			fill(93, 82, 249);
+			text(puntos, 278, 407);
+			text(tiempoActual, 365, 461);
 			break;
 
 		}
@@ -185,6 +189,9 @@ public class Main extends PApplet {
 		tiempoActual = 0;
 		inicioTiempo = millis();
 		frameCount = 0;
+		listaBalas.clear();
+		listaEnemigo1.clear();
+		listaEnemigo2.clear();
 	}
 
 	private void initBala() {
@@ -211,11 +218,12 @@ public class Main extends PApplet {
 	}
 
 	private void iniEnemigo1() {
-		int vel = 2;
+		int vel = 3;
 		if (frameCount == 60) {
 			listaEnemigo1.add(new EnemigoMenor((int) random(15, 490), 2, 1, vel, this));
 			//eliminarNave();
-			// System.out.println(listaEnemigo1.size());
+			frameCount = 0;
+			System.out.println(frameCount);
 
 		}
 
@@ -232,12 +240,14 @@ public class Main extends PApplet {
 
 	private void iniEnemigo2() {
 		int vel1 = 3;
-		if (puntos == 10) {
-			if (frameCount == 10) {
+		if (puntos % 10 == 0 && puntos != 0) {
+			if (frameCount == 60) {
 				listaEnemigo2.add(new EnemigoMayor((int) random(15, 490), 50, 2, vel1, this));
 				System.out.println(listaEnemigo2.size());
+				
 				// System.out.println(frameCount);
 				frameCount = 0;
+				puntos += 1;
 			}
 			
 		}
