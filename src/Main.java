@@ -48,7 +48,7 @@ public class Main extends PApplet {
 	public void draw() {
 
 		imageMode(CENTER);
-		//System.out.println(mouseY);
+		// System.out.println(mouseY);
 		cambioPantallas();
 
 	}
@@ -79,6 +79,8 @@ public class Main extends PApplet {
 
 	}
 
+/////////////////////CARGAR FONDOS///////////////////////
+
 	private void cargarFondos() {
 		imgInicio = loadImage("lib/inicio.jpg");
 		imgInicio.resize(600, 900);
@@ -89,6 +91,8 @@ public class Main extends PApplet {
 		imgJuego = loadImage("lib/juego.jpg");
 		imgJuego.resize(600, 900);
 	}
+
+/////////////////////CARGAR PANTALLAS///////////////////////
 
 	private void cambioPantallas() {
 		switch (pantalla) {
@@ -107,6 +111,7 @@ public class Main extends PApplet {
 			drawEnemigo2();
 			tiempo();
 			puntuacion();
+			eliminarNave();
 			pierdeJuego();
 			break;
 
@@ -130,6 +135,8 @@ public class Main extends PApplet {
 		}
 
 	}
+
+/////////////////////BOTONES///////////////////////	
 
 	private void clickBoton() {
 		switch (pantalla) {
@@ -170,6 +177,8 @@ public class Main extends PApplet {
 		}
 	}
 
+/////////////////////TIEMPO///////////////////////	
+
 	private void tiempo() {
 
 		tiempoActual = millis() - inicioTiempo;
@@ -178,13 +187,18 @@ public class Main extends PApplet {
 		text("Tiempo: " + tiempoActual / 1000, 410, 60);
 	}
 
+/////////////////////PUNTOS///////////////////////
+
 	private void puntuacion() {
 		textSize(25);
 		fill(245, 245, 245);
 		text("Puntos: " + puntos, 50, 60);
 	}
 
+/////////////////////RESET///////////////////////
+
 	private void reset() {
+		puntos = 0;
 		tiempoActual = 0;
 		inicioTiempo = millis();
 		frameCount = 0;
@@ -193,6 +207,8 @@ public class Main extends PApplet {
 		listaEnemigo2.clear();
 		nave.setPosX(300);
 	}
+
+/////////////////////BALAS///////////////////////
 
 	private void initBala() {
 		listaBalas.add(new Bala(nave.getPosX(), 783, this));
@@ -217,11 +233,12 @@ public class Main extends PApplet {
 		}
 	}
 
+/////////////////////ENEMIGOS///////////////////////
+
 	private void iniEnemigo1() {
-		int vel = 3;
+		int vel = 2;
 		if (frameCount == 60) {
 			listaEnemigo1.add(new EnemigoMenor((int) random(15, 490), 2, 1, vel, this));
-			// eliminarNave();
 			frameCount = 0;
 			System.out.println(frameCount);
 
@@ -233,19 +250,14 @@ public class Main extends PApplet {
 		for (int i = 0; i < listaEnemigo1.size(); i++) {
 			listaEnemigo1.get(i).drawEn();
 
-			// listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
-
 		}
 	}
 
 	private void iniEnemigo2() {
 		int vel1 = 3;
-		if (puntos % 10 == 0) {
+		if (puntos % 10 == 0 && puntos != 0) {
 			if (listaEnemigo2.size() < 3) {
 				listaEnemigo2.add(new EnemigoMayor((int) random(15, 490), 50, 2, vel1, this));
-				System.out.println(listaEnemigo2.size());
-
-				System.out.println("sirvo");
 				frameCount = 0;
 				puntos += 1;
 			}
@@ -257,23 +269,48 @@ public class Main extends PApplet {
 	private void drawEnemigo2() {
 		for (int i = 0; i < listaEnemigo2.size(); i++) {
 			listaEnemigo2.get(i).drawEn2();
-			// listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
 
 		}
 	}
 
-	/*
-	 * private void eliminarNave() { for (int i = 0; i < listaEnemigo1.size(); i++)
-	 * { if (listaBalas.get(i).getPosX() > (listaEnemigo1.get(i).getPosX() - (102 /
-	 * 2)) && bala.getPosX() < (listaEnemigo1.get(i).getPosX() + (102 / 2)) &&
-	 * bala.getbPosY() > (listaEnemigo1.get(i).getPosY() - (54 / 2)) &&
-	 * bala.getbPosY() < (listaEnemigo1.get(i).getPosY() + (54 / 2))) {
-	 * listaEnemigo1.remove(i);
-	 * 
-	 * }
-	 * 
-	 * } }
-	 */
+/////////////////////ELIMINAR ENEMIGOS///////////////////////	
+
+	private void eliminarNave() {
+
+		for (int i = 0; i < listaEnemigo1.size(); i++) {
+			for (int j = 0; j < listaBalas.size(); j++) {
+				if (listaBalas.get(j).getPosX() > (listaEnemigo1.get(i).getPosX() - (102 / 2))
+						&& listaBalas.get(j).getPosX() < (listaEnemigo1.get(i).getPosX() + (102 / 2))
+						&& listaBalas.get(j).getbPosY() > (listaEnemigo1.get(i).getPosY() - (54 / 2))
+						&& listaBalas.get(j).getbPosY() < (listaEnemigo1.get(i).getPosY() + (54 / 2))) {
+						listaEnemigo1.get(i).setVida(listaEnemigo1.get(i).getVida()-1);
+						if (listaEnemigo1.get(i).getVida() == 0) {
+							listaEnemigo1.remove(i);
+						}
+						listaBalas.remove(j);
+						puntos += 1;
+				}
+
+			}
+		}
+		
+		for (int i = 0; i < listaEnemigo2.size(); i++) {
+			for (int j = 0; j < listaBalas.size(); j++) {
+				if (listaBalas.get(j).getPosX() > (listaEnemigo2.get(i).getPosX() - (102 / 2))
+						&& listaBalas.get(j).getPosX() < (listaEnemigo2.get(i).getPosX() + (102 / 2))
+						&& listaBalas.get(j).getbPosY() > (listaEnemigo2.get(i).getPosY() - (54 / 2))
+						&& listaBalas.get(j).getbPosY() < (listaEnemigo2.get(i).getPosY() + (54 / 2))) {
+						listaEnemigo2.get(i).setVida(listaEnemigo2.get(i).getVida()-1);
+						if (listaEnemigo2.get(i).getVida() == 0) {
+							listaEnemigo2.remove(i);
+						}
+						listaBalas.remove(j);
+						puntos += 2;
+				}
+		}					
+	}
+	}
+/////////////////////PERDER///////////////////////	
 
 	private void pierdeJuego() {
 		System.out.println(listaEnemigo2.size());
@@ -283,28 +320,25 @@ public class Main extends PApplet {
 					|| listaEnemigo1.get(i).getPosX() > (nave.getPosX() - (158 / 2))
 							&& listaEnemigo1.get(i).getPosX() < (nave.getPosX() + (158 / 2))
 							&& listaEnemigo1.get(i).getPosY() > (783 - (150 / 2))
-							&& listaEnemigo1.get(i).getPosY() < (783 + (150 / 2))
-							) {
+							&& listaEnemigo1.get(i).getPosY() < (783 + (150 / 2))) {
 				listaEnemigo1.remove(i);
 				pantalla = 5;
 
 			}
-			
+
 			for (int j = 0; j < listaEnemigo2.size(); j++) {
-					if (listaEnemigo2.size() >= 1) {
-						if(alturaLienzo < (listaEnemigo2.get(j).getPosY() + (54 / 2))
-						|| listaEnemigo2.get(j).getPosX() > (nave.getPosX() - (158 / 2))
-								&& listaEnemigo2.get(j).getPosX() < (nave.getPosX() + (158 / 2))
-								&& listaEnemigo2.get(j).getPosY() > (783 - (150 / 2))
-								&& listaEnemigo2.get(j).getPosY() < (783 + (150 / 2))){
-									listaEnemigo2.remove(j);
-									pantalla = 5;
-								}
-				
+				if (listaEnemigo2.size() >= 1) {
+					if (alturaLienzo < (listaEnemigo2.get(j).getPosY() + (54 / 2))
+							|| listaEnemigo2.get(j).getPosX() > (nave.getPosX() - (158 / 2))
+									&& listaEnemigo2.get(j).getPosX() < (nave.getPosX() + (158 / 2))
+									&& listaEnemigo2.get(j).getPosY() > (783 - (150 / 2))
+									&& listaEnemigo2.get(j).getPosY() < (783 + (150 / 2))) {
+						listaEnemigo2.remove(j);
+						pantalla = 5;
+					}
+
+				}
 			}
-			}
-					
-					
 
 		}
 

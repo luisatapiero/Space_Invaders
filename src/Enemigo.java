@@ -2,7 +2,7 @@ import processing.core.PApplet;
 
 public class Enemigo {
 	
-	private int vida;
+	protected int vida;
 	private int velocidad;
 	private int posX;
 	private int posY;
