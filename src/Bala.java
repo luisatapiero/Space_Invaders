@@ -52,6 +52,11 @@ public class Bala {
 		this.dispara = dispara;
 	}
 
+
+	public int getPosX() {
+		return posX;
+	}
+
 	//public ArrayList<Bala> getListaBalas() 
 
 	

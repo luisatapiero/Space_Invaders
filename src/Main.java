@@ -21,7 +21,10 @@ public class Main extends PApplet {
 	private ArrayList<EnemigoMayor> listaEnemigo2;
 
 	int pantalla = 1;
-	private int vel;
+	int tiempo1;
+	int inicioTiempo;
+	int tiempoActual;
+
 
 	public static void main(String[] args) {
 		PApplet.main(Main.class.getName());
@@ -38,7 +41,9 @@ public class Main extends PApplet {
 		listaEnemigo1 = new ArrayList<EnemigoMenor>();
 		listaEnemigo2 = new ArrayList<EnemigoMayor>();
 		nave = new Nave(this);
-		frameRate(90);
+		frameRate(60);
+		inicioTiempo = millis();
+		tiempoActual = 0;
 		// bala = new Bala(this);
 	}
 
@@ -104,6 +109,7 @@ public class Main extends PApplet {
 			drawEnemigo2();
 			tiempo();
 			puntuacion();
+			pierdeJuego();
 			break;
 
 		case 3:
@@ -125,6 +131,7 @@ public class Main extends PApplet {
 	private void clickBoton() {
 		switch (pantalla) {
 		case 1:
+			reset();
 			if (mouseX > 188 && mouseX < 422 && mouseY > 439 && mouseY < 506) {
 				pantalla = 2;
 			} else if (mouseX > 188 && mouseX < 422 && mouseY > 555 && mouseY < 621) {
@@ -135,7 +142,7 @@ public class Main extends PApplet {
 			break;
 
 		case 2:
-			background(imgJuego);
+		
 			break;
 
 		case 3:
@@ -145,31 +152,43 @@ public class Main extends PApplet {
 			break;
 
 		case 4:
-			background(imgResumen);
+			
+			break;
+			
+		case 5:
 			if (mouseX > 170 && mouseX < 418 && mouseY > 522 && mouseY < 588) {
+				reset();
 				pantalla = 2;
+			
+				System.out.println(pantalla);
+				
 			}
 			break;
-
 		}
 	}
 
 	private void tiempo() {
-		int tiempo = millis() / 1000;
+
+		tiempoActual = millis() - inicioTiempo;
 		textSize(25);
 		fill(245, 245, 245);
-		text("Tiempo: " + tiempo, 410, 60);
+		text("Tiempo: " + tiempoActual/1000, 410, 60);
 	}
-	
+
 	private void puntuacion() {
 		textSize(25);
 		fill(245, 245, 245);
-		text("Puntos: " + tiempo, 50, 60);
+		text("Puntos: " + puntos, 50, 60);
+	}
+	
+	private void reset() {
+		tiempoActual = 0;
+		inicioTiempo = millis();
+		frameCount = 0;
 	}
 
 	private void initBala() {
 		listaBalas.add(new Bala(nave.getPosX(), 783, this));
-		
 
 	}
 
@@ -185,48 +204,77 @@ public class Main extends PApplet {
 		for (int i = 0; i < listaBalas.size(); i++) {
 			if (listaBalas.get(i).getbPosY() < 0) {
 				listaBalas.remove(i);
-				//System.out.println(listaBalas.size());
 
 			}
 
 		}
 	}
-	
-	
+
 	private void iniEnemigo1() {
 		int vel = 2;
-		if (frameCount == 90) {
-			listaEnemigo1.add(new EnemigoMenor((int) random(15,490), 2, 1, vel, this));
-			//System.out.println(listaEnemigo1.size());
+		if (frameCount == 60) {
+			listaEnemigo1.add(new EnemigoMenor((int) random(15, 490), 2, 1, vel, this));
+			//eliminarNave();
+			// System.out.println(listaEnemigo1.size());
 
 		}
-		
+
 	}
-	
+
 	private void drawEnemigo1() {
 		for (int i = 0; i < listaEnemigo1.size(); i++) {
 			listaEnemigo1.get(i).drawEn();
-			//listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
+			
+			// listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
 
 		}
 	}
-	
+
 	private void iniEnemigo2() {
-		int vel1 = 4;
-		if (puntos % 10 == 0 && puntos != 0) {
-			listaEnemigo2.add(new EnemigoMayor((int) random(15,490), 50, 2, vel1, this));
-			System.out.println(listaEnemigo2.size());
-			//System.out.println(frameCount);
-			frameCount = 0;
+		int vel1 = 3;
+		if (puntos == 10) {
+			if (frameCount == 10) {
+				listaEnemigo2.add(new EnemigoMayor((int) random(15, 490), 50, 2, vel1, this));
+				System.out.println(listaEnemigo2.size());
+				// System.out.println(frameCount);
+				frameCount = 0;
+			}
+			
 		}
-		
+
 	}
-	
+
 	private void drawEnemigo2() {
 		for (int i = 0; i < listaEnemigo2.size(); i++) {
 			listaEnemigo2.get(i).drawEn2();
-			//listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
+			// listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
 
 		}
+	}
+	
+	/*private void eliminarNave() {
+		for (int i = 0; i < listaEnemigo1.size(); i++) {
+			if (listaBalas.get(i).getPosX() > (listaEnemigo1.get(i).getPosX() - (102 / 2))
+					&& bala.getPosX() < (listaEnemigo1.get(i).getPosX() + (102 / 2))
+					&& bala.getbPosY() > (listaEnemigo1.get(i).getPosY() - (54 / 2))
+					&& bala.getbPosY() < (listaEnemigo1.get(i).getPosY() + (54 / 2))) {
+				listaEnemigo1.remove(i);
+
+			}
+			
+		} 
+	}*/
+	
+	private void pierdeJuego() {
+		int alturaLienzo=900;
+		for (int i = 0; i < listaEnemigo1.size(); i++) {
+			if (alturaLienzo < (listaEnemigo1.get(i).getPosY() + (54 / 2))) {
+				listaEnemigo1.remove(i);
+				pantalla = 5;
+
+			}
+
+		}
+
 	}
 }
