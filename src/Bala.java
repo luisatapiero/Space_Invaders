@@ -57,7 +57,5 @@ public class Bala {
 		return posX;
 	}
 
-	//public ArrayList<Bala> getListaBalas() 
-
 	
 }

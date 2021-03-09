@@ -49,7 +49,6 @@ public class Main extends PApplet {
 	public void draw() {
 
 		imageMode(CENTER);
-		// System.out.println(mouseY);
 		cambioPantallas();
 
 	}
@@ -170,8 +169,6 @@ public class Main extends PApplet {
 			if (mouseX > 170 && mouseX < 418 && mouseY > 522 && mouseY < 588) {
 				reset();
 				pantalla = 2;
-
-				//System.out.println(pantalla);
 
 			}
 			break;
