@@ -27,7 +27,6 @@ public class Main extends PApplet{
 	
 	public void setup() {
 		cargarFondos();
-		//cargarBotones();
 		
 	}
 	
@@ -35,12 +34,8 @@ public class Main extends PApplet{
 		imageMode(CENTER);
 		System.out.println(mouseX);
 		cambioPantallas();
+		System.out.println("prueba");
 		
-		
-		
-		/*image(bJugar,310,478);
-		image(bInstrucciones,310,593);
-		image(bSalir,310,708);*/
 	}
 	
 	public void mousePressed() {
@@ -74,11 +69,11 @@ public class Main extends PApplet{
 			break;
 			
 		case 4:
-			background (imgResumen);
+			exit();
 			break;
 			
 		case 5:
-			
+			background (imgResumen);
 			break;
 
 		}
