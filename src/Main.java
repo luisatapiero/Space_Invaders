@@ -8,14 +8,20 @@ public class Main extends PApplet {
 
 	private Nave nave;
 	private Bala bala;
+	private EnemigoMenor enemigoMenor;
+	private EnemigoMayor enemigoMayor;
 	PImage imgInicio;
 	PImage imgInstrucciones;
 	PImage imgResumen;
 	PImage imgJuego;
 	int tiempo = 0;
+	int puntos = 0;
 	private ArrayList<Bala> listaBalas;
+	private ArrayList<EnemigoMenor> listaEnemigo1;
+	private ArrayList<EnemigoMayor> listaEnemigo2;
 
 	int pantalla = 1;
+	private int vel;
 
 	public static void main(String[] args) {
 		PApplet.main(Main.class.getName());
@@ -29,7 +35,10 @@ public class Main extends PApplet {
 	public void setup() {
 		cargarFondos();
 		listaBalas = new ArrayList<Bala>();
+		listaEnemigo1 = new ArrayList<EnemigoMenor>();
+		listaEnemigo2 = new ArrayList<EnemigoMayor>();
 		nave = new Nave(this);
+		frameRate(90);
 		// bala = new Bala(this);
 	}
 
@@ -61,7 +70,6 @@ public class Main extends PApplet {
 		}
 
 		if (key == ' ') {
-			System.out.println("space");
 			initBala();
 
 		}
@@ -87,10 +95,15 @@ public class Main extends PApplet {
 
 		case 2:
 			background(imgJuego);
-			nave.draw();
 			drawBala();
+			nave.draw();
 			eliminarBala();
+			iniEnemigo1();
+			drawEnemigo1();
+			iniEnemigo2();
+			drawEnemigo2();
 			tiempo();
+			puntuacion();
 			break;
 
 		case 3:
@@ -147,10 +160,16 @@ public class Main extends PApplet {
 		fill(245, 245, 245);
 		text("Tiempo: " + tiempo, 410, 60);
 	}
+	
+	private void puntuacion() {
+		textSize(25);
+		fill(245, 245, 245);
+		text("Puntos: " + tiempo, 50, 60);
+	}
 
 	private void initBala() {
 		listaBalas.add(new Bala(nave.getPosX(), 783, this));
-		System.out.println(listaBalas.size());
+		
 
 	}
 
@@ -161,14 +180,52 @@ public class Main extends PApplet {
 
 		}
 	}
+
 	private void eliminarBala() {
 		for (int i = 0; i < listaBalas.size(); i++) {
 			if (listaBalas.get(i).getbPosY() < 0) {
 				listaBalas.remove(i);
-				System.out.println(listaBalas.size());
-				
-	}
+				//System.out.println(listaBalas.size());
 
+			}
+
+		}
+	}
+	
+	
+	private void iniEnemigo1() {
+		int vel = 2;
+		if (frameCount == 90) {
+			listaEnemigo1.add(new EnemigoMenor((int) random(15,490), 2, 1, vel, this));
+			//System.out.println(listaEnemigo1.size());
+
+		}
+		
+	}
+	
+	private void drawEnemigo1() {
+		for (int i = 0; i < listaEnemigo1.size(); i++) {
+			listaEnemigo1.get(i).drawEn();
+			//listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
+
+		}
+	}
+	
+	private void iniEnemigo2() {
+		int vel1 = 4;
+		if (puntos % 10 == 0 && puntos != 0) {
+			listaEnemigo2.add(new EnemigoMayor((int) random(15,490), 50, 2, vel1, this));
+			System.out.println(listaEnemigo2.size());
+			//System.out.println(frameCount);
+			frameCount = 0;
+		}
+		
+	}
+	
+	private void drawEnemigo2() {
+		for (int i = 0; i < listaEnemigo2.size(); i++) {
+			listaEnemigo2.get(i).drawEn2();
+			//listaEnemigo1.get(i).setDispara(!listaEnemigo1s.get(i).isDispara());
 
 		}
 	}

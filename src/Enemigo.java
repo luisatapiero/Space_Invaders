@@ -15,10 +15,11 @@ public class Enemigo {
 		this.app = app;
 		this.vida = vida;
 		this.velocidad = velocidad;
-		
-		
 	
 	}
+	
+
+
 
 	public int getVida() {
 		return vida;

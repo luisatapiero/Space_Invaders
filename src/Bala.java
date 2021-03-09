@@ -1,7 +1,4 @@
 
-import java.util.ArrayList;
-
-
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -31,6 +28,7 @@ public class Bala {
 	}
 	
 	public void mostrarBala() {
+			app.noStroke();
 			app.fill (255, 171, 85);
 			app.circle (posX, bPosY, 10);
 			disparar();
