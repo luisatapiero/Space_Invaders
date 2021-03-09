@@ -3,12 +3,12 @@ import processing.core.PApplet;
 public class Enemigo {
 	
 	protected int vida;
-	private int velocidad;
+	private float velocidad;
 	private int posX;
-	private int posY;
+	private float posY;
 	protected PApplet app;
 	
-	public Enemigo(int posX, int posY, int vida, int velocidad, PApplet app) {
+	public Enemigo(int posX, int posY, int vida, float velocidad, PApplet app) {
 		super();
 		this.posX = posX;
 		this.posY = posY;
@@ -29,13 +29,21 @@ public class Enemigo {
 		this.vida = vida;
 	}
 
-	public int getVelocidad() {
+
+
+	public float getVelocidad() {
 		return velocidad;
 	}
 
-	public void setVelocidad(int velocidad) {
+
+
+
+	public void setVelocidad(float velocidad) {
 		this.velocidad = velocidad;
 	}
+
+
+
 
 	public int getPosX() {
 		return posX;
@@ -45,12 +53,12 @@ public class Enemigo {
 		this.posX = posX;
 	}
 
-	public int getPosY() {
+	public float getPosY() {
 		return posY;
 	}
 
-	public void setPosY(int posY) {
-		this.posY = posY;
+	public void setPosY(float f) {
+		this.posY = f;
 	}
 	
 	

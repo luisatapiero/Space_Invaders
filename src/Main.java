@@ -24,6 +24,7 @@ public class Main extends PApplet {
 	int tiempo1;
 	int inicioTiempo;
 	int tiempoActual;
+	float vel;
 
 	public static void main(String[] args) {
 		PApplet.main(Main.class.getName());
@@ -170,7 +171,7 @@ public class Main extends PApplet {
 				reset();
 				pantalla = 2;
 
-				System.out.println(pantalla);
+				//System.out.println(pantalla);
 
 			}
 			break;
@@ -236,11 +237,15 @@ public class Main extends PApplet {
 /////////////////////ENEMIGOS///////////////////////
 
 	private void iniEnemigo1() {
-		int vel = 2;
+		float vel = 2;
+		if (puntos % 10 == 0 && puntos != 0) {
+			vel += 2;
+		} 
+		
 		if (frameCount == 60) {
 			listaEnemigo1.add(new EnemigoMenor((int) random(15, 490), 2, 1, vel, this));
 			frameCount = 0;
-			System.out.println(frameCount);
+			//System.out.println(frameCount);
 
 		}
 
@@ -254,12 +259,18 @@ public class Main extends PApplet {
 	}
 
 	private void iniEnemigo2() {
-		int vel1 = 3;
+		
+		float vel1 = 3;
 		if (puntos % 10 == 0 && puntos != 0) {
-			if (listaEnemigo2.size() < 3) {
+			vel1 += 1;
+		}
+			
+		if (puntos % 10 == 0 && puntos != 0) {
+			if (listaEnemigo2.size() < 1) {
 				listaEnemigo2.add(new EnemigoMayor((int) random(15, 490), 50, 2, vel1, this));
 				frameCount = 0;
-				puntos += 1;
+
+	
 			}
 
 		}
@@ -313,7 +324,6 @@ public class Main extends PApplet {
 /////////////////////PERDER///////////////////////	
 
 	private void pierdeJuego() {
-		System.out.println(listaEnemigo2.size());
 		int alturaLienzo = 900;
 		for (int i = 0; i < listaEnemigo1.size(); i++) {
 			if (alturaLienzo < (listaEnemigo1.get(i).getPosY() + (54 / 2))

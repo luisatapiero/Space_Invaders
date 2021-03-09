@@ -6,7 +6,7 @@ public class EnemigoMenor extends Enemigo {
 		PImage enemigo1;
 		int vida = 1;
 
-	public EnemigoMenor(int posX, int posY, int vida, int velocidad, PApplet app) {
+	public EnemigoMenor(int posX, int posY, int vida, float velocidad, PApplet app) {
 		super(posX, posY, vida, velocidad, app);
 		this.vida = vida;
 		

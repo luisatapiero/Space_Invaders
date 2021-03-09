@@ -7,7 +7,7 @@ public class EnemigoMayor extends Enemigo{
 	private PApplet app;
 
 	
-	public EnemigoMayor(int posX, int posY, int vida, int velocidad, PApplet app) {
+	public EnemigoMayor(int posX, int posY, int vida, float velocidad, PApplet app) {
 		super(posX, posY, vida, velocidad, app);
 		vida = 2;
 		velocidad = 4;
