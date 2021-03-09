@@ -30,7 +30,7 @@ public class Main extends PApplet {
 		cargarFondos();
 		listaBalas = new ArrayList<Bala>();
 		nave = new Nave(this);
-		//bala = new Bala(this);
+		// bala = new Bala(this);
 	}
 
 	public void draw() {
@@ -48,29 +48,27 @@ public class Main extends PApplet {
 
 	public void keyPressed() {
 		if (nave.getPosX() > 0) {
-			
+
 			if (keyCode == LEFT) {
-				nave.setPosX(nave.getPosX() - 10);
+				nave.setPosX(nave.getPosX() - 15);
 			}
 		}
-			if (nave.getPosX() < 600) {
-				if (keyCode == RIGHT) {
-					nave.setPosX(nave.getPosX() + 10);
+		if (nave.getPosX() < 600) {
+			if (keyCode == RIGHT) {
+				nave.setPosX(nave.getPosX() + 15);
 
-				}
 			}
+		}
 
-		
-		 
 		if (key == ' ') {
-			System.out.println("space");	
+			System.out.println("space");
 			initBala();
 
 		}
 
 	}
 
-	public void cargarFondos() {
+	private void cargarFondos() {
 		imgInicio = loadImage("lib/inicio.jpg");
 		imgInicio.resize(600, 900);
 		imgInstrucciones = loadImage("lib/instrucciones.jpg");
@@ -81,7 +79,7 @@ public class Main extends PApplet {
 		imgJuego.resize(600, 900);
 	}
 
-	public void cambioPantallas() {
+	private void cambioPantallas() {
 		switch (pantalla) {
 		case 1:
 			background(imgInicio);
@@ -91,6 +89,7 @@ public class Main extends PApplet {
 			background(imgJuego);
 			nave.draw();
 			drawBala();
+			eliminarBala();
 			tiempo();
 			break;
 
@@ -110,7 +109,7 @@ public class Main extends PApplet {
 
 	}
 
-	public void clickBoton() {
+	private void clickBoton() {
 		switch (pantalla) {
 		case 1:
 			if (mouseX > 188 && mouseX < 422 && mouseY > 439 && mouseY < 506) {
@@ -142,31 +141,35 @@ public class Main extends PApplet {
 		}
 	}
 
-	public void tiempo() {
+	private void tiempo() {
 		int tiempo = millis() / 1000;
 		textSize(25);
 		fill(245, 245, 245);
 		text("Tiempo: " + tiempo, 410, 60);
 	}
-	
+
 	private void initBala() {
-			listaBalas.add(new Bala(nave.getPosX(), 783, this));
-			System.out.println(listaBalas.size());
+		listaBalas.add(new Bala(nave.getPosX(), 783, this));
+		System.out.println(listaBalas.size());
 
 	}
-	
-	public void drawBala() {
+
+	private void drawBala() {
 		for (int i = 0; i < listaBalas.size(); i++) {
 			listaBalas.get(i).mostrarBala();
 			listaBalas.get(i).setDispara(!listaBalas.get(i).isDispara());
-			//listaBalas.get(i).setbPosY(listaBalas.get(i).getbPosY()-100);
-			//System.out.println(listaBalas.length);
 
 		}
 	}
+	private void eliminarBala() {
+		for (int i = 0; i < listaBalas.size(); i++) {
+			if (listaBalas.get(i).getbPosY() < 0) {
+				listaBalas.remove(i);
+				System.out.println(listaBalas.size());
+				
+	}
 
 
-
-	
-	
+		}
+	}
 }

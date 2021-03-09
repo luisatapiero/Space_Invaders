@@ -9,7 +9,7 @@ public class Bala {
 	private Nave nave;
 	PImage disparo;
 	private int bPosY = 783;
-	private int vel = 10;
+	private int vel = 12;
 	private PApplet app;
 	private int posX;
 	private boolean dispara;
@@ -22,19 +22,11 @@ public class Bala {
 		dispara = false;
 	}
 	
-	/*public void cargarImg() {
-		disparo = app.loadImage("lib/bala.png");
-		disparo.resize(18, 51);
-	}*/
-
-
 	
 	public void disparar() {
 		if (dispara == true) {
 			bPosY -= vel;
 		}
-		
-		
 		
 	}
 	
