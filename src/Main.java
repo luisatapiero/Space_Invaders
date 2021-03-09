@@ -245,7 +245,6 @@ public class Main extends PApplet {
 		if (frameCount == 60) {
 			listaEnemigo1.add(new EnemigoMenor((int) random(15, 490), 2, 1, vel, this));
 			frameCount = 0;
-			//System.out.println(frameCount);
 
 		}
 
