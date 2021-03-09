@@ -1,16 +1,19 @@
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Main extends PApplet {
 
 	private Nave nave;
+	private Bala bala;
 	PImage imgInicio;
 	PImage imgInstrucciones;
 	PImage imgResumen;
 	PImage imgJuego;
 	int tiempo = 0;
-
+	private ArrayList<Bala> listaBalas;
 
 	int pantalla = 1;
 
@@ -23,17 +26,18 @@ public class Main extends PApplet {
 		size(600, 900);
 	}
 
-	public void setup() {	
+	public void setup() {
 		cargarFondos();
+		listaBalas = new ArrayList<Bala>();
 		nave = new Nave(this);
+		//bala = new Bala(this);
 	}
 
 	public void draw() {
-		
+
 		imageMode(CENTER);
 		// System.out.println(mouseX);
 		cambioPantallas();
-		
 
 	}
 
@@ -41,24 +45,30 @@ public class Main extends PApplet {
 		clickBoton();
 
 	}
-	
+
 	public void keyPressed() {
-		if (nave.getPosX()<600) {
-		if (keyCode == LEFT) {
-			nave.setPosX (nave.getPosX() - 10);
+		if (nave.getPosX() > 0) {
 			
-		} 
-		if (nave.getPosX()>0) {
-			if (keyCode == RIGHT) {
-				nave.setPosX (nave.getPosX() + 10);
-				
+			if (keyCode == LEFT) {
+				nave.setPosX(nave.getPosX() - 10);
 			}
 		}
-		
-		}
-		
-	}
+			if (nave.getPosX() < 600) {
+				if (keyCode == RIGHT) {
+					nave.setPosX(nave.getPosX() + 10);
 
+				}
+			}
+
+		
+		 
+		if (key == ' ') {
+			System.out.println("space");	
+			initBala();
+
+		}
+
+	}
 
 	public void cargarFondos() {
 		imgInicio = loadImage("lib/inicio.jpg");
@@ -80,6 +90,7 @@ public class Main extends PApplet {
 		case 2:
 			background(imgJuego);
 			nave.draw();
+			drawBala();
 			tiempo();
 			break;
 
@@ -137,6 +148,24 @@ public class Main extends PApplet {
 		fill(245, 245, 245);
 		text("Tiempo: " + tiempo, 410, 60);
 	}
+	
+	private void initBala() {
+			listaBalas.add(new Bala(nave.getPosX(), 783, this));
+			System.out.println(listaBalas.size());
+
+	}
+	
+	public void drawBala() {
+		for (int i = 0; i < listaBalas.size(); i++) {
+			listaBalas.get(i).mostrarBala();
+			listaBalas.get(i).setDispara(!listaBalas.get(i).isDispara());
+			//listaBalas.get(i).setbPosY(listaBalas.get(i).getbPosY()-100);
+			//System.out.println(listaBalas.length);
+
+		}
+	}
+
+
 
 	
 	
