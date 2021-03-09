@@ -28,13 +28,14 @@ public class Main extends PApplet{
 	public void setup() {
 		cargarFondos();
 		
+		
 	}
 	
 	public void draw() {
 		imageMode(CENTER);
-		System.out.println(mouseX);
+		//System.out.println(mouseX);
 		cambioPantallas();
-		System.out.println("prueba");
+
 		
 	}
 	
@@ -62,6 +63,9 @@ public class Main extends PApplet{
 			
 		case 2:
 			background (imgJuego);
+			textSize(25); 
+			fill(245, 245, 245);
+			text("Tiempo: "+millis()/1000,410,60);
 			break;
 			
 		case 3:
